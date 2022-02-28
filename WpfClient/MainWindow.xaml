@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfChatClient"
         xmlns:watermark="clr-namespace:Watermarks;assembly=Watermarks"
         mc:Ignorable="d"
-        Title="Chat client" Height="200" Width="500" Closing="Window_Closing">
+        Title="Bank client" Height="200" Width="500" Closing="Window_Closing">
     <Grid Margin="40,0,0,-6"  >
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFChatServer"
         mc:Ignorable="d"
-        Title="Chat server" Height="610" Width="519.675"  Closing="Window_Closing">
+        Title="Bank server" Height="610" Width="519.675"  Closing="Window_Closing">
     <Grid Margin="0,0,0,43"  >
         <Grid.RowDefinitions>
             <RowDefinition Height="85*"/>
