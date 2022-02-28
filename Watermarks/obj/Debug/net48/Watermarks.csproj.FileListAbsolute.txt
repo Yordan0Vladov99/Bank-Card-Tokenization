@@ -1,0 +1,9 @@
+C:\Users\йордан\Desktop\OOP - C#\Labs\Tasks\Project1_62320\Watermarks\bin\Debug\net48\Watermarks.dll
+C:\Users\йордан\Desktop\OOP - C#\Labs\Tasks\Project1_62320\Watermarks\bin\Debug\net48\Watermarks.pdb
+C:\Users\йордан\Desktop\OOP - C#\Labs\Tasks\Project1_62320\Watermarks\obj\Debug\net48\Watermarks.csproj.AssemblyReference.cache
+C:\Users\йордан\Desktop\OOP - C#\Labs\Tasks\Project1_62320\Watermarks\obj\Debug\net48\Watermarks.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\йордан\Desktop\OOP - C#\Labs\Tasks\Project1_62320\Watermarks\obj\Debug\net48\Watermarks.AssemblyInfoInputs.cache
+C:\Users\йордан\Desktop\OOP - C#\Labs\Tasks\Project1_62320\Watermarks\obj\Debug\net48\Watermarks.AssemblyInfo.cs
+C:\Users\йордан\Desktop\OOP - C#\Labs\Tasks\Project1_62320\Watermarks\obj\Debug\net48\Watermarks.csproj.CoreCompileInputs.cache
+C:\Users\йордан\Desktop\OOP - C#\Labs\Tasks\Project1_62320\Watermarks\obj\Debug\net48\Watermarks.dll
+C:\Users\йордан\Desktop\OOP - C#\Labs\Tasks\Project1_62320\Watermarks\obj\Debug\net48\Watermarks.pdb

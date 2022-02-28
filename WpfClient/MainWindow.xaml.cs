@@ -14,9 +14,9 @@ namespace WpfChatClient
     /// </summary>
     public partial class MainWindow : Window
     {
-        private NetworkStream output;       
-        private BinaryFormatter bf;   
-        private Thread readThread; 
+        private NetworkStream output;
+        private BinaryFormatter bf;
+        private Thread readThread;
         private string message = "";
         public MainWindow()
         {
@@ -29,85 +29,137 @@ namespace WpfChatClient
         {
             System.Environment.Exit(System.Environment.ExitCode);
         }
-       
-        private void TxtInput_KeyDown(object sender, KeyEventArgs e)
-        {
-            try
-            {
-                if (e.Key == Key.Return && TxtInput.IsEnabled == true)
-                {
-                  
-                    bf.Serialize(output,"CLIENT>>> " + TxtInput.Text);
-                  
-                    TxtDisplay.Text += "\r\nCLIENT>>> " + TxtInput.Text + "\r\n";
-                    TxtInput.Clear();
-                } 
-            } 
-            catch (SocketException)
-            {
-                TxtDisplay.Text += "\nError writing object\r\n";
-            } 
-        } 
+
+        //private void TxtInput_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (e.Key == Key.Return && TxtInput.IsEnabled == true)
+        //        {
+        //          
+        //            bf.Serialize(output,"CLIENT>>> " + TxtInput.Text);
+        //          
+        //            TxtDisplay.Text += "\r\nCLIENT>>> " + TxtInput.Text + "\r\n";
+        //            TxtInput.Clear();
+        //        } 
+        //    } 
+        //    catch (SocketException)
+        //    {
+        //        TxtDisplay.Text += "\nError writing object\r\n";
+        //    } 
+        //} 
 
         private void SubmitUser(object sender, EventArgs e)
         {
 
-            if (Regex.IsMatch(UserName.Text, @"\s") || Regex.IsMatch(Password.Text, @"\s"))
+            if (Regex.IsMatch(UserName.Text, @"\s") || Regex.IsMatch(Password.Password, @"\s"))
             {
-                DisplayMessage("Invalid username or password.\r\n");
+                //DisplayMessage("Invalid username or password.\r\n");
+                bool validUser = true;
+                bool validPassword = true;
+                if (Regex.IsMatch(UserName.Text, @"\s"))
+                {
+                    validUser = false;
+                }
+
+                if (Regex.IsMatch(Password.Password, @"\s"))
+                {
+                    Dispatcher.Invoke(new Action(() => { PasswordError.Content = "Invalid Password."; }));
+                    validPassword = false;
+                }
+                DisplayError(validUser, validPassword);
+
             }
             else
             {
-                SendMessage("Verify " + UserName.Text + " " + Password.Text);
+                SendMessage("Verify " + UserName.Text + " " + Password.Password);
             }
-           
+
         }
-        public void ExtractCard(object sender, EventArgs e)
+
+        private void DisplayError(bool validUser, bool validPassword)
         {
-            String message = TxtInput.Text;
-
-            if(!Regex.IsMatch(message, @"^[0-9]{16}$"))
+            if (!validUser)
             {
-                DisplayMessage("Invalid Token.\r\n");
+                Dispatcher.Invoke(new Action(() => { UserNameError.Visibility = Visibility.Visible; }));
             }
-            else
+            else if (UserNameError.Visibility == Visibility.Visible)
             {
-                SendMessage("Extract " + message);
+                Dispatcher.Invoke(new Action(() => { UserNameError.Visibility = Visibility.Hidden; }));
+            }
+
+            if (!validPassword)
+            {
+                Dispatcher.Invoke(new Action(() => { PasswordError.Visibility = Visibility.Visible; }));
+            }
+            else if (PasswordError.Visibility == Visibility.Visible)
+            {
+                Dispatcher.Invoke(new Action(() => { PasswordError.Visibility = Visibility.Hidden; }));
             }
         }
-
-        public void RegisterToken(object sender, EventArgs e)
+        private void ExtractCard(object sender, EventArgs e)
         {
             String message = TxtInput.Text;
 
             if (!Regex.IsMatch(message, @"^[0-9]{16}$"))
             {
-                DisplayMessage("Invalid Card Number.\r\n");
+                DisplayInputError(true, "Invalid token number.");
             }
             else
             {
+                DisplayInputError(false, "");
+                SendMessage("Extract " + message);
+            }
+        }
+
+        private void RegisterToken(object sender, EventArgs e)
+        {
+            String message = TxtInput.Text;
+
+            if (!Regex.IsMatch(message, @"^[0-9]{16}$"))
+            {
+                DisplayInputError(true, "Invalid Card Number.\r\n");
+
+            }
+            else
+            {
+                DisplayInputError(false, "");
                 SendMessage("Register " + message);
             }
         }
-        public void SendMessage(String str)
+
+        private void DisplayInputError(bool isError, string errorMessage)
+        {
+            if (isError)
+            {
+                Dispatcher.Invoke(new Action(() => { InputError.Visibility = Visibility.Visible; InputError.Content = errorMessage; }));
+
+            }
+            else
+            {
+                Dispatcher.Invoke(new Action(() => { InputError.Visibility = Visibility.Hidden; }));
+
+            }
+        }
+        private void SendMessage(String str)
         {
             try
             {
+                DisplayInputError(false, "");
                 bf.Serialize(output, str);
-                    DisplayMessage("CLIENT>>> " + str +"\r\n");
-            } 
+                // DisplayMessage("CLIENT>>> " + str +"\r\n");
+            }
             catch (SocketException)
             {
-                DisplayMessage("Error writing object\r\n");
-            } 
+                DisplayInputError(true, "Error writing object\r\n");
+            }
         }
-        public void RunClient()
+        private void RunClient()
         {
-            TcpClient client=null;
+            TcpClient client = null;
 
             try
             {
-                DisplayMessage("Attempting connection\r\n");
 
                 client = new TcpClient();
                 client.Connect("127.0.0.1", 50000);
@@ -115,32 +167,41 @@ namespace WpfChatClient
                 output = client.GetStream();
 
 
-                DisplayMessage("\r\nGot I/O streams\r\n");
-                EnableInput(true); 
+                EnableInput(true);
 
                 do
                 {
                     try
                     {
                         message = (string)bf.Deserialize(output);
-                        checkValidUser(message);
-                        
-                        DisplayMessage("\r\nSERVER>>>" + message + "\r\n");
-                    } 
+
+                        if (message == "Invalid User Name or Password.")
+                        {
+                            Dispatcher.Invoke(new Action(() => { PasswordError.Content = "Invalid User Name or Password."; }));
+                            DisplayError(true, false);
+                        }
+                        else
+                        {
+                            checkValidUser(message);
+                            DisplayError(true, true);
+                            DisplayMessage(message);
+                        }
+
+                    }
                     catch (Exception)
                     {
                         System.Environment.Exit(System.Environment.ExitCode);
-                    } 
+                    }
                 } while (message != "SERVER>>> TERMINATE");
 
-               
-            } 
+
+            }
             catch (Exception error)
             {
                 MessageBox.Show(error.ToString(), "Connection Error",
                    MessageBoxButton.OK, MessageBoxImage.Error);
-                
-            } 
+
+            }
             finally
             {
                 output?.Close();
@@ -148,7 +209,7 @@ namespace WpfChatClient
 
                 System.Environment.Exit(System.Environment.ExitCode);
             }
-        } 
+        }
 
         private void checkValidUser(String message)
         {
@@ -174,14 +235,8 @@ namespace WpfChatClient
             }
         }
         private void DisplayMessage(string message)
-        {
-            if (!TxtDisplay.Dispatcher.CheckAccess())
-            {
-                TxtDisplay.Dispatcher.Invoke(new Action(() => TxtDisplay.Text += message));
-
-            } 
-            else 
-                TxtDisplay.Text += message+"\n";
+        { 
+            TxtDisplay.Dispatcher.Invoke(new Action(() => TxtDisplay.Text = message));
         } 
         private void EnableInput(bool value)
         {
@@ -193,29 +248,29 @@ namespace WpfChatClient
                 TxtInput.IsEnabled = value;
         } 
 
-        private void TxtInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            try
-            {
-
-                if (TxtInput.IsEnabled == true)
-                {
-                    bf.Serialize(output,"CLIENT>>> " + e.Text);
-                    //writer.Write("CLIENT>>> " + e.Text);
-                    TxtDisplay.Text += "\r\nCLIENT>>> " + e.Text;
-                    TxtInput.Clear();
-                } // end if
-            } // end try
-            catch (SocketException)
-            {
-                TxtDisplay.Text += "\nError writing object";
-            } // end catch
-        }
-
-        private void TxtInput_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-
-        } // end method TxtInput_KeyDown
+        //private void TxtInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        //{
+        //    try
+        //    {
+        //
+        //        if (TxtInput.IsEnabled == true)
+        //        {
+        //            bf.Serialize(output,"CLIENT>>> " + e.Text);
+        //            //writer.Write("CLIENT>>> " + e.Text);
+        //            TxtDisplay.Text += "\r\nCLIENT>>> " + e.Text;
+        //            TxtInput.Clear();
+        //        } // end if
+        //    } // end try
+        //    catch (SocketException)
+        //    {
+        //        TxtDisplay.Text += "\nError writing object";
+        //    } // end catch
+        //}
+        //
+        //private void TxtInput_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        //{
+        //
+        //} // end method TxtInput_KeyDown
 
 
     }

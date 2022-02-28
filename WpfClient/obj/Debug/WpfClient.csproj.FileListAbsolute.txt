@@ -89,3 +89,6 @@ C:\Users\йордан\Desktop\OOP - C#\Labs\Tasks\Project1_62320\WpfClient\obj\D
 C:\Users\йордан\Desktop\OOP - C#\Labs\Tasks\Project1_62320\WpfClient\obj\Debug\WpfClient.csproj.CoreCompileInputs.cache
 C:\Users\йордан\Desktop\OOP - C#\Labs\Tasks\Project1_62320\WpfClient\obj\Debug\WpfClient.exe
 C:\Users\йордан\Desktop\OOP - C#\Labs\Tasks\Project1_62320\WpfClient\obj\Debug\WpfClient.pdb
+C:\Users\йордан\Desktop\OOP - C#\Labs\Tasks\Project1_62320\WpfClient\bin\Debug\Watermarks.dll
+C:\Users\йордан\Desktop\OOP - C#\Labs\Tasks\Project1_62320\WpfClient\bin\Debug\Watermarks.pdb
+C:\Users\йордан\Desktop\OOP - C#\Labs\Tasks\Project1_62320\WpfClient\obj\Debug\WpfClient.csproj.CopyComplete

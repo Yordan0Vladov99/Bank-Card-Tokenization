@@ -95,5 +95,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Watermarks\Watermarks.csproj">
+      <Project>{0abac991-0339-4734-9a53-c07dbf6aedeb}</Project>
+      <Name>Watermarks</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,26 +4,41 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfChatClient"
+        xmlns:watermark="clr-namespace:Watermarks;assembly=Watermarks"
         mc:Ignorable="d"
-        Title="Chat client" Height="471" Width="516.231" Closing="Window_Closing">
-    <Grid Margin="0,0,0,-6"  >
+        Title="Chat client" Height="200" Width="500" Closing="Window_Closing">
+    <Grid Margin="40,0,0,-6"  >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="13*"/>
-            <RowDefinition Height="29*"/>
-            <RowDefinition Height="262*"/>
+            <RowDefinition/>
             <RowDefinition Height="0*"/>
         </Grid.RowDefinitions>
-        <Grid Name="RegisteredUserInput" Margin="0,0,0,295" Visibility="Hidden" Grid.RowSpan="3">
-            <TextBox x:Name="TxtInput" HorizontalAlignment="Left" Height="27" Margin="10,10,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="488" VerticalScrollBarVisibility="Disabled" FontWeight="Bold" MaxLines="1"  IsEnabled="True"   KeyDown="TxtInput_KeyDown"/>
-            <Button x:Name="ExtractButton" Click="ExtractCard" Content="Extract"  HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="226" Height="27" FontSize="16"/>
-            <Button x:Name="RegisterButton" Click="RegisterToken" Content="Register"  HorizontalAlignment="Left" Margin="272,56,0,0" VerticalAlignment="Top" Width="226" Height="27" FontSize="16"/>
+        <Grid Name="RegisteredUserInput" Margin="-40,0,-2,0" Visibility="Hidden" Grid.ColumnSpan="3">
+            <TextBox x:Name="TxtInput" HorizontalAlignment="Left" Height="27" Margin="10,10,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="450" VerticalScrollBarVisibility="Disabled" FontWeight="Bold" MaxLines="1"  IsEnabled="True" />
+            <TextBox x:Name="TxtDisplay" HorizontalAlignment="Left" Height="27" Margin="8,120,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="450" VerticalScrollBarVisibility="Disabled" FontWeight="Bold" MaxLines="1"  IsEnabled="True"  Grid.Row="2"/>
+            <Button x:Name="ExtractButton" Click="ExtractCard" Content="Extract"  HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="220" Height="27" FontSize="16"/>
+            <Button x:Name="RegisterButton" Click="RegisterToken" Content="Register"  HorizontalAlignment="Left" Margin="240,56,0,0" VerticalAlignment="Top" Width="220" Height="27" FontSize="16"/>
+            <Label  x:Name="InputError" Content="Invalid Card" Visibility="Hidden" HorizontalAlignment="Left" Margin="10,32,0,0" VerticalAlignment="Top" Width="200" Foreground="Red" FontWeight="Bold" Height="24"/>
         </Grid>
-        <Grid Name="UserInput" Margin="0,0,0,295" Grid.RowSpan="3">
-            <TextBox x:Name="UserName" HorizontalAlignment="Left" Height="27" Margin="8,10,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="488" VerticalScrollBarVisibility="Disabled" FontWeight="Bold" MaxLines="1"  IsEnabled="True"   KeyDown="TxtInput_KeyDown" Grid.Row="1"/>
-            <TextBox x:Name="Password" HorizontalAlignment="Left" Height="27" Margin="8,56,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="488" VerticalScrollBarVisibility="Disabled" FontWeight="Bold" MaxLines="1"  IsEnabled="True"   KeyDown="TxtInput_KeyDown"/>
-            <Button x:Name="SubmitBtn" Content="Submit" Click="SubmitUser"  HorizontalAlignment="Left" Margin="10,109,0,0" VerticalAlignment="Top" Width="486" Height="27" FontSize="16"/>
+        <Grid Name="UserInput" Height="177" VerticalAlignment="Center" Visibility="Visible" Margin="-40,0,-2,0" Grid.ColumnSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="UserName" HorizontalAlignment="Left" Height="27" Margin="81,10,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="368" VerticalScrollBarVisibility="Disabled" FontWeight="Bold" MaxLines="1"  IsEnabled="True">
+            </TextBox>
+            <PasswordBox x:Name="Password" HorizontalAlignment="Left" Height="27" Margin="81,56,0,0" VerticalAlignment="Top" Width="368" FontWeight="Bold"  IsEnabled="True">
+            </PasswordBox>
+            <Button x:Name="SubmitBtn" Content="Submit" Click="SubmitUser"  HorizontalAlignment="Left" Margin="81,109,0,0" VerticalAlignment="Top" Width="366" Height="27" FontSize="16"/>
+            <Label x:Name="UserNameError" Visibility="Hidden" Content="Invalid User Name" HorizontalAlignment="Left" Margin="81,37,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
+            <Label x:Name="PasswordError" Visibility="Hidden" Content="Invalid Password" HorizontalAlignment="Left" Margin="81,78,0,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
+            <Label Content="Username:" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top"/>
+            <Label Content="Password:" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top"/>
         </Grid>
-        <TextBox x:Name="TxtDisplay" HorizontalAlignment="Left" Height="249" Margin="8,120,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="488" VerticalScrollBarVisibility="Visible" FontWeight="Bold" MaxLines="1"  IsEnabled="True"   KeyDown="TxtInput_KeyDown" Grid.Row="2"/>
     </Grid>
 </Window>
 

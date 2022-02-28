@@ -58,6 +58,7 @@ namespace WPFChatServer
             bf = new BinaryFormatter();
             readThread = new Thread(new ThreadStart(RunServer));
             readThread.Start();
+            counter = 0;
         }
         
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -97,7 +98,6 @@ namespace WPFChatServer
         public void RunServer()
         {
             TcpListener listener;
-            int counter = 1;
 
             
             try
@@ -142,7 +142,7 @@ namespace WPFChatServer
                     {
                         pairsStr += pair + "\n";
                     }
-                    DisplayMessage(pairsStr);
+                    DisplayMessage(pairsStr + "\r\n");
                     byte[] info = new UTF8Encoding(true).GetBytes(pairsStr);
                     // Add some information to the file.
                     fs.Write(info, 0, info.Length);
@@ -174,7 +174,7 @@ namespace WPFChatServer
                     {
                         pairsStr += pair + "\n";
                     }
-                    DisplayMessage(pairsStr);
+                    DisplayMessage(pairsStr+"\r\n");
                     byte[] info = new UTF8Encoding(true).GetBytes(pairsStr);
                     fs.Write(info, 0, info.Length);
                 }
@@ -336,7 +336,7 @@ namespace WPFChatServer
                         }
                         if (!isValid)
                         {
-                            SendMessage("\nInvalid user or Password.", Thread.CurrentThread);
+                            SendMessage("Invalid User Name or Password.", Thread.CurrentThread);
                         }
                     }
                     else if (parts[0].Equals("Extract"))
