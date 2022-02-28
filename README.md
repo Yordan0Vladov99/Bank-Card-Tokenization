@@ -20,3 +20,6 @@ The server implements the following functions:
   - handles extraction requests by accepting a valid registered token and returning the credit card with which the token was registered.
   - writes to text file all the card-token pairs, sorted by the credit card number
   - writes to text file all the card-token pairs, sorted by the token number
+
+The client connects to server by providing a valid user name and password.
+After connecting, the client interface updates depending on the client rights.
