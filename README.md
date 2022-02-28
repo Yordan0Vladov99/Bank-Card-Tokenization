@@ -23,3 +23,4 @@ The server implements the following functions:
 
 The client connects to server by providing a valid user name and password.
 After connecting, the client interface updates depending on the client rights.
+The client can then submit registration/extraction requests to server and visualize server responses.
