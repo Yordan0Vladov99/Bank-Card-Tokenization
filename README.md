@@ -1,5 +1,5 @@
 # Bank-Card-Tokenization
-A bank system that allows users to token to tokenize their credit cards.
+A bank system that allows users to tokenize their credit cards.
 Tokenization means transforming a 16-digit credit card number into a unique token.
 A token must meet the following requirements:
   - the number of token digits and credit card digits must be equal
